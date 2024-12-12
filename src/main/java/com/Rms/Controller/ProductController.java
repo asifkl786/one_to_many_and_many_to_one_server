@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,18 +22,29 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Rms.DTO.ProductDTO;
 import com.Rms.Service.ProductService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/product")
+@Validated
 public class ProductController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
 	ProductService productService;
+	
+	
+	// Create Product REST API
+	@PostMapping("/create")
+	private ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
+		logger.info("Recived Request to create Product ");
+		ProductDTO product = productService.createProduct(productDTO);
+		return new ResponseEntity<>(product, HttpStatus.CREATED);
+	}
 	
 	// Get All Product REST API
 	@GetMapping("/getAll")

@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.Rms.DTO.ProductDTO;
 import com.Rms.Exception.ResourceNotFoundException;
+import com.Rms.Model.Category;
 import com.Rms.Model.Product;
 import com.Rms.ModelMapper.ProductMapper;
+import com.Rms.Repository.CategoryRepository;
 import com.Rms.Repository.ProductRepository;
 
 import lombok.AllArgsConstructor;
@@ -26,11 +28,21 @@ public class ProductServiceImple implements ProductService{
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+    private CategoryRepository categoryRepository;
 
 	@Override
 	public ProductDTO createProduct(ProductDTO productDTO) {
-		
-		return null;
+		logger.info("Create Product {}",productDTO);
+		// Fetch the Category
+        Category category = categoryRepository.findById(productDTO.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + productDTO.getCategoryId()));
+        
+        // Map DTO to Product entity
+		Product product = ProductMapper.toEntity(productDTO);
+		Product savedProduct = productRepository.save(product);
+		return ProductMapper.mapToDTO(savedProduct);
 	}
 
 	// Get Product By  Id
@@ -98,6 +110,7 @@ public class ProductServiceImple implements ProductService{
 	public List<ProductDTO> searchProductByPrice(Double price) {
 		logger.info("Search Product By Price : {}", price);
 		List<Product> products = productRepository.findByPriceLessThanEqual(price);
+		logger.info("Found {} products", products.size());
 			if (products.isEmpty()) {
 	            throw new ResourceNotFoundException("No product found in with Price: " + price);
 	        }
