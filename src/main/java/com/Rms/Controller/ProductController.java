@@ -41,7 +41,7 @@ public class ProductController {
 	// Create Product REST API
 	@PostMapping("/create")
 	private ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
-		logger.info("Recived Request to create Product ");
+		logger.info("Recived Request to create Product : {} ", productDTO);
 		ProductDTO product = productService.createProduct(productDTO);
 		return new ResponseEntity<>(product, HttpStatus.CREATED);
 	}

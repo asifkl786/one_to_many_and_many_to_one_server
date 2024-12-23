@@ -37,7 +37,7 @@ public class CategoryController {
 	// Build Create REST API
 	@PostMapping("/create")
 	private ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
-		logger.info("Receaived request to create Category: {}", categoryDTO);
+		logger.info("Received request to create Category: {}", categoryDTO);
 		CategoryDTO categoryDto = categoryService.createCategory(categoryDTO);
 		return new ResponseEntity<>(categoryDto,HttpStatus.CREATED);
 	}
@@ -45,7 +45,7 @@ public class CategoryController {
 	// Build Get CategoryById REST API
 	@GetMapping("/{id}")
 	private ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id){
-		logger.info("Receaived Request to get category With Id : {}", id);
+		logger.info("Received Request to get category With Id : {}", id);
 	CategoryDTO category = categoryService.getCategoryById(id);
 		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
@@ -53,7 +53,7 @@ public class CategoryController {
 	// Build Get All Category REST API
 	@GetMapping("/getAllCategory")
 	private ResponseEntity<List<CategoryDTO>> getAllCategory(){
-		logger.info("Receaved Request to Fetch All Category ");
+		logger.info("Received Request to Fetch All Category ");
 		List<CategoryDTO> category = categoryService.getAllCategory();
 		return new ResponseEntity<>(category,HttpStatus.OK);
 	}
@@ -61,7 +61,7 @@ public class CategoryController {
 	// Build Update Category REST API
 	@PutMapping("/update/{id}")
 	private ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
-		logger.info("Recieved Request to Update Category With Id : {} " , id);
+		logger.info("Received Request to Update Category With Id : {} " , id);
 		CategoryDTO category = categoryService.updateCategory(id, categoryDTO);
 		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
@@ -69,7 +69,7 @@ public class CategoryController {
 	// Build Delete Category REST API
 	@DeleteMapping("delete/{id}")
 	private ResponseEntity<String> deleteCategory(@PathVariable Long id){
-		logger.info("Recieved Request to Delete Category With id : {} ",id);
+		logger.info("Received Request to Delete Category With id : {} ",id);
 		categoryService.deleteCategory(id);
 		return new ResponseEntity<>("Delete Category Succesfully", HttpStatus.OK);
 		

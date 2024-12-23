@@ -32,9 +32,11 @@ public class ProductServiceImple implements ProductService{
 	@Autowired
     private CategoryRepository categoryRepository;
 
+	
+	// Create product 
 	@Override
 	public ProductDTO createProduct(ProductDTO productDTO) {
-		logger.info("Create Product {}",productDTO);
+		logger.info("{} Product Created ",productDTO.getName());
 		// Fetch the Category
         Category category = categoryRepository.findById(productDTO.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + productDTO.getCategoryId()));
@@ -42,6 +44,7 @@ public class ProductServiceImple implements ProductService{
         // Map DTO to Product entity
 		Product product = ProductMapper.toEntity(productDTO);
 		Product savedProduct = productRepository.save(product);
+		logger.info("{} Product Created Successfully",savedProduct.getName());
 		return ProductMapper.mapToDTO(savedProduct);
 	}
 
@@ -51,6 +54,7 @@ public class ProductServiceImple implements ProductService{
 		logger.info("Get Product with id : {} ", id);
 		Product product = productRepository.findById(id)
 		.orElseThrow(() -> new ResourceNotFoundException("Product is not exists with given id :"  + id));
+		logger.info("{} Product Found Successfully",product.getName());
 		return ProductMapper.mapToDTO(product);
 	}
 
@@ -60,6 +64,7 @@ public class ProductServiceImple implements ProductService{
 	public List<ProductDTO> getAllProduct() {
 		logger.info("Get All Product....");
 		List<Product> products = productRepository.findAll();
+		logger.info("{} Products Successfully Found",products.size());
 		return products.stream().map(ProductMapper::mapToDTO).collect(Collectors.toList());
 	}
 	
@@ -77,6 +82,7 @@ public class ProductServiceImple implements ProductService{
 		
 		// Save product to  database
 		Product savedProduct = productRepository.save(product);
+		logger.info("{} Product Update Successfully",savedProduct);
 		return ProductMapper.mapToDTO(savedProduct);
 	}
     
@@ -88,6 +94,7 @@ public class ProductServiceImple implements ProductService{
 		Product product = productRepository.findById(id)
 		.orElseThrow(() -> new ResourceNotFoundException("Product is not exists with given id :"  + id));
 		productRepository.delete(product);
+		logger.info("{} Product Deleted Successfully",product.getName());
 		
 	}
 
@@ -97,6 +104,7 @@ public class ProductServiceImple implements ProductService{
 	public List<ProductDTO> searchProductByName(String name) {
 		logger.info("Search Product With Name : {} ", name);
 		List<Product> products = productRepository.searchProductByName(name);
+		logger.info("{} Products Successfully found");
 				if (products.isEmpty()) {
 		            throw new ResourceNotFoundException("No product found in with Name: " + name);
 		        }
@@ -110,7 +118,7 @@ public class ProductServiceImple implements ProductService{
 	public List<ProductDTO> searchProductByPrice(Double price) {
 		logger.info("Search Product By Price : {}", price);
 		List<Product> products = productRepository.findByPriceLessThanEqual(price);
-		logger.info("Found {} products", products.size());
+		logger.info("{} Products Successfully Found", products.size());
 			if (products.isEmpty()) {
 	            throw new ResourceNotFoundException("No product found in with Price: " + price);
 	        }

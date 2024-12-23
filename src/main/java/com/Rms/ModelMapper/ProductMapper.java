@@ -17,6 +17,7 @@ public class ProductMapper {
 		    product.setId(productDTO.getId());
 		    product.setName(productDTO.getName());
 		    product.setPrice(productDTO.getPrice());
+		   //product.setCategory(productDTO.getCategoryId()); ye set nahi ho rahi thi
 
 		    // Since this is many-to-one, you need to set the parent category manually
 		    if (productDTO.getCategoryId() != null) {
