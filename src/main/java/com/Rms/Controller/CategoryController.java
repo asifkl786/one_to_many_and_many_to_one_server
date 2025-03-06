@@ -37,7 +37,7 @@ public class CategoryController {
 	// Build Create REST API
 	@PostMapping("/create")
 	private ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
-		logger.info("Received request to create Category: {}", categoryDTO);
+		logger.info("Received request to create Category: {}", categoryDTO.getName());
 		CategoryDTO categoryDto = categoryService.createCategory(categoryDTO);
 		return new ResponseEntity<>(categoryDto,HttpStatus.CREATED);
 	}

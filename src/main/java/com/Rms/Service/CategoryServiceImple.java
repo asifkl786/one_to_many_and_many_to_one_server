@@ -30,10 +30,10 @@ public class CategoryServiceImple implements CategoryService {
 	// Create Category 
 	@Override
 	public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-		logger.info("Creating Category: {}", categoryDTO);
+		logger.info("Creating Category Whose Name :: {}", categoryDTO.getName());
 		Category category = CategoryMapper.toEntity(categoryDTO);
 		Category savedCategory = categoryRepository.save(category);
-		logger.info("{} Category Successfully Created",savedCategory.getName());
+		logger.info("{}:: Category Successfully Created",savedCategory.getName());
 		return CategoryMapper.mapToDTO(savedCategory);
 	}
 

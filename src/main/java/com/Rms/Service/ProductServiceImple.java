@@ -36,7 +36,7 @@ public class ProductServiceImple implements ProductService{
 	// Create product 
 	@Override
 	public ProductDTO createProduct(ProductDTO productDTO) {
-		logger.info("{} Product Created ",productDTO.getName());
+		logger.info("{} :: Product Creating..... ",productDTO.getName());
 		// Fetch the Category
         Category category = categoryRepository.findById(productDTO.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + productDTO.getCategoryId()));
@@ -44,17 +44,17 @@ public class ProductServiceImple implements ProductService{
         // Map DTO to Product entity
 		Product product = ProductMapper.toEntity(productDTO);
 		Product savedProduct = productRepository.save(product);
-		logger.info("{} Product Created Successfully",savedProduct.getName());
+		logger.info("{}:: Product Created Successfully",savedProduct.getName());
 		return ProductMapper.mapToDTO(savedProduct);
 	}
 
 	// Get Product By  Id
 	@Override
 	public ProductDTO getProductById(Long id) {
-		logger.info("Get Product with id : {} ", id);
+		logger.info("Geting Product with id.... :: {} ", id);
 		Product product = productRepository.findById(id)
 		.orElseThrow(() -> new ResourceNotFoundException("Product is not exists with given id :"  + id));
-		logger.info("{} Product Found Successfully",product.getName());
+		logger.info("{} :: Product Found Successfully",product.getName());
 		return ProductMapper.mapToDTO(product);
 	}
 
@@ -72,7 +72,7 @@ public class ProductServiceImple implements ProductService{
 	// Update Product
 	@Override
 	public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
-		logger.info("Update Product with id : {}", id);
+		logger.info("Updating Product with id.... :: {}", id);
 		Product product = productRepository.findById(id)
 		.orElseThrow(() -> new ResourceNotFoundException("Product is not exists with given id :"  + id));
 		
@@ -82,7 +82,7 @@ public class ProductServiceImple implements ProductService{
 		
 		// Save product to  database
 		Product savedProduct = productRepository.save(product);
-		logger.info("{} Product Update Successfully",savedProduct);
+		logger.info("{} :: Product Update Successfully",savedProduct.getName());
 		return ProductMapper.mapToDTO(savedProduct);
 	}
     

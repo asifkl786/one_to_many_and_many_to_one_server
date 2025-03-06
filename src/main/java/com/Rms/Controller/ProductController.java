@@ -41,7 +41,7 @@ public class ProductController {
 	// Create Product REST API
 	@PostMapping("/create")
 	private ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
-		logger.info("Recived Request to create Product : {} ", productDTO);
+		logger.info("Recived Request to create Product :: {} ", productDTO.getName());
 		ProductDTO product = productService.createProduct(productDTO);
 		return new ResponseEntity<>(product, HttpStatus.CREATED);
 	}
@@ -73,7 +73,7 @@ public class ProductController {
 	// Build update product REST API
 	@PutMapping("/update/{id}")
 	private ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO){
-		logger.info("Reciaved Request to Update Product with id : {} ",id);
+		logger.info("Reciaved Request to Update Product with id :: {} ",id);
 		ProductDTO updatedProduct = productService.updateProduct(id, productDTO);
 		return new ResponseEntity<>(updatedProduct,HttpStatus.OK);
 	}
